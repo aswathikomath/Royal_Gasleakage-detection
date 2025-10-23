@@ -1,0 +1,42 @@
+{% extends "Administration/adminhome.html" %}
+
+{% block title %}Feedback{% endblock %}
+
+{% block body %}
+<main class="bg-gray-50 min-h-screen py-12 px-6">
+    <div class="max-w-5xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8 text-center">User Feedback</h1>
+
+        <div class="overflow-x-auto bg-white rounded-lg shadow">
+            <table class="min-w-full table-auto">
+                <thead class="bg-blue-600 text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Username</th>
+                        <th class="px-6 py-3 text-left text-sm font-semibold uppercase">Feedback</th>
+                        <th class="px-6 py-3 text-center text-sm font-semibold uppercase">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200">
+                    {% for f in feedback %}
+                    <tr class="hover:bg-gray-50">
+                        <td class="px-6 py-4 text-gray-800">{{ f.USER.name }}</td>
+                        <td class="px-6 py-4 text-gray-700">{{ f.feedback }}</td>
+                        <td class="px-6 py-4 text-center">
+                            <a href="{% url 'DeleteFeedback' f.id %}"
+                               onclick="return confirm('Are you sure you want to delete this feedback?')"
+                               class="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded-md text-sm">
+                               Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="3" class="text-center py-6 text-gray-500">No feedbacks found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
+{% endblock %}

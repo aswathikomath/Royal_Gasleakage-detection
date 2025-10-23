@@ -1,0 +1,108 @@
+{% extends "Administration/adminhome.html" %}
+
+{% block title %}Agency Details{% endblock %}
+
+{% block body %}
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #e6f3ff; /* light skyblue background */
+    margin: 0;
+    padding: 0;
+  }
+
+  main {
+    padding: 40px 20px;
+    min-height: 100vh;
+  }
+
+  h1 {
+    color: #eef1f3; /* dark skyblue */
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 30px;
+  }
+
+  .table-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0px 4px 12px rgba(0, 122, 204, 0.2);
+    overflow-x: auto;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 10px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  thead {
+    background-color: #0099ff;
+    color: #ffffff;
+  }
+
+  th, td {
+    padding: 14px 18px;
+    text-align: left;
+    font-size: 15px;
+  }
+
+  th {
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: #f0f8ff; /* light alternate skyblue row */
+  }
+
+  tbody tr:hover {
+    background-color: #d9f0ff;
+    transition: 0.3s;
+  }
+
+  td {
+    color: #333333;
+  }
+
+  .no-data {
+    text-align: center;
+    color: #666;
+    padding: 20px;
+    font-style: italic;
+  }
+</style>
+
+<main>
+  <h1>Agency Details</h1>
+
+  <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>Agency</th>
+          <th>Mobile Number</th>
+          <th>Place</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for f in agencydata %}
+        <tr>
+          <td>{{ f.Agencyname }}</td>
+          <td>{{ f.Phone }}</td>
+          <td>{{ f.place }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+          <td colspan="3" class="no-data">No agency details found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</main>
+{% endblock %}

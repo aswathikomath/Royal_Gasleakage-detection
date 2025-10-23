@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title></title> </title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hero-gradient {
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">Admin Home</h1>
+      <div class="space-x-6 hidden md:flex">
+        <a href="Adminhome" class="text-gray-700 hover:text-blue-600">Home</a>
+        <a href="agencyview" class="text-gray-700 hover:text-blue-600">Agency Details</a>
+        <a href="viewusersbyadmin" class="text-gray-700 hover:text-blue-600">User Details</a>
+         <a href="Complaints" class="text-gray-700 hover:text-blue-600">Complaints</a>
+         <a href="Viewfiresafety" class="text-gray-700 hover:text-blue-600">Fire and Safety</a>
+
+   
+        <a href="logout" class="text-red-600 hover:text-red-700">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-gradient text-white text-center py-20">
+    {%block body%}
+    <h2 class="text-4xl font-bold mb-4">Welcome </h2>
+    <p class="text-lg mb-6">Your trusted partner for safe and reliable gas supply</p>
+    
+  </section>
+
+  <!-- Quick Actions -->
+  <section class="py-14">
+    <div class="max-w-6xl mx-auto px-6">
+      <h3 class="text-2xl font-bold text-center text-gray-800 mb-10">Quick Actions</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card bg-white p-6 rounded-xl text-center">
+          <div class="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-lg mx-auto mb-4">
+            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zM3 17a7 7 0 1114 0H3z"/></svg>
+          </div>
+          <h4 class="font-semibold text-gray-800">User Details</h4>
+        </div>
+
+        <div class="card bg-white p-6 rounded-xl text-center">
+          <div class="bg-green-100 w-12 h-12 flex items-center justify-center rounded-lg mx-auto mb-4">
+            <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16z"/></svg>
+          </div>
+          <h4 class="font-semibold text-gray-800">New Request</h4>
+        </div>
+
+        <div class="card bg-white p-6 rounded-xl text-center">
+          <div class="bg-orange-100 w-12 h-12 flex items-center justify-center rounded-lg mx-auto mb-4">
+            <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20"><path d="M8.257 3.099a2 2 0 013.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92z"/></svg>
+          </div>
+          <h4 class="font-semibold text-gray-800">Complaints</h4>
+        </div>
+         <div class="card bg-white p-6 rounded-xl text-center">
+          <div class="bg-orange-100 w-12 h-12 flex items-center justify-center rounded-lg mx-auto mb-4">
+            <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20"><path d="M8.257 3.099a2 2 0 013.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92z"/></svg>
+          </div>
+          <h4 class="font-semibold text-gray-800">Profile</h4>
+        </div>
+        <div class="card bg-white p-6 rounded-xl text-center">
+          <div class="bg-purple-100 w-12 h-12 flex items-center justify-center rounded-lg mx-auto mb-4">
+            <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20"><path d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2z"/></svg>
+          </div>
+          <h4 class="font-semibold text-gray-800">Feedback</h4>
+        </div>
+      </div>
+    </div>
+    {%endblock%}
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white text-center py-4">
+    <p>&copy; 2025 GasFlow Agency. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>

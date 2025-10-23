@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Agency - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .hero-gradient {
+      background: linear-gradient(135deg, #2563eb, #60a5fa);
+    }
+    .card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+
+<body class="bg-gray-50 font-sans">
+
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <h1 class="text-2xl font-bold text-blue-600">GasFlow Agency</h1>
+      <div class="space-x-6 hidden md:flex">
+        <a href="Home" class="text-gray-700 hover:text-blue-600">Home</a>
+        <a href="Users" class="text-gray-700 hover:text-blue-600">User Details</a>
+         <a href="Emergency" class="text-gray-700 hover:text-blue-600">Emergency</a>
+
+        <a href="logout" class="text-red-600 hover:text-red-700">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-gradient text-white text-center py-20">
+    {%block body%}
+    <h2 class="text-4xl font-bold mb-4">Welcome </h2>
+    <p class="text-lg mb-6">Your trusted partner for safe and reliable gas supply</p>
+   
+  </section>
+
+  <!-- Quick Actions -->
+  <section class="py-14">
+    <div class="max-w-6xl mx-auto px-6">
+      <h3 class="text-2xl font-bold text-center text-gray-800 mb-10">Quick Actions</h3>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div class="card bg-white p-6 rounded-xl text-center">
+          <div class="bg-blue-100 w-12 h-12 flex items-center justify-center rounded-lg mx-auto mb-4">
+            <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20"><path d="M10 9a3 3 0 100-6 3 3 0 000 6zM3 17a7 7 0 1114 0H3z"/></svg>
+          </div>
+          <h4 class="font-semibold text-gray-800">User Details</h4>
+        </div>
+
+        
+      </div>
+    </div>
+    {%endblock%}
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-blue-600 text-white text-center py-4">
+    <p>&copy; 2025 GasFlow Agency. All Rights Reserved.</p>
+  </footer>
+
+</body>
+</html>
