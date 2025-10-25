@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views import View
@@ -272,22 +273,26 @@ class complaint(APIView):
 class view_notifications(APIView):
     def get(self, request, id):
         try:
-
             # Step 1: Get user based on login ID
             user = UserTable.objects.get(LOGINID__id=id)
-            print('***************')
-            print(user)
-            print('***************')
 
-            # Step 2: Match device ID from user to Notification table
+            # Step 2: Fetch all notifications for that device, latest first
             notifications = Notification.objects.filter(deviceid=user.device_id).order_by('-date')
 
-            # Step 3: Serialize notifications
-            serializer = NotificationSerializer(notifications, many=True)
+            if not notifications.exists():
+                return Response({"message": "No notifications found"}, status=status.HTTP_404_NOT_FOUND)
 
-            # Step 4: Return response
+            # Step 3: Get the latest one
+            latest_notification = notifications.first()
+
+            # Step 4: Delete all previous ones except the latest
+            notifications.exclude(id=latest_notification.id).delete()
+
+            # Step 5: Serialize only the latest one
+            serializer = NotificationSerializer(latest_notification)
+
             return Response(serializer.data, status=status.HTTP_200_OK)
-        
+
         except UserTable.DoesNotExist:
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
         
@@ -329,6 +334,7 @@ class cylinder_status(APIView):
             serializer = GasDetailsSerializer(notificationss, many=True)
 
             # Step 4: Return response
+            print('-----@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@----->', serializer.data)
             return Response(serializer.data, status=status.HTTP_200_OK)
         
         except UserTable.DoesNotExist:
@@ -391,3 +397,67 @@ class ViewNotificationsFromSafety(APIView):
      notifications = notificationbysafety.objects.all().order_by('-date')  # latest first
      serializer = NotificationsSerializer(notifications, many=True)
      return Response(serializer.data)
+  
+class LogEventAPIView(APIView):
+    def post(self, request):
+        try:
+            data = request.data
+            print("Received data:", data)
+
+            device_id = data.get('id')
+            event = data.get('event', 'unknown')
+            gas_value = data.get('gas_value')
+            fan_status = data.get('fan_status', 0)
+            light_status = data.get('light_status', 0)
+            servo_position = data.get('servo_position', 'open')
+
+            if device_id is None:
+                return Response({"status": "error", "message": "Device ID is required"},
+                                status=status.HTTP_400_BAD_REQUEST)
+
+            # ✅ Create new gas entry
+            gas_entry = GasDetails.objects.create(
+                device_id=device_id,
+                event=event,
+                gas_value=gas_value,
+                fan_status=fan_status,
+                light_status=light_status,
+                servo_position=servo_position
+            )
+            print('44444444444444444')
+
+            # ✅ Keep only last 5 entries, delete older ones
+            total_entries = GasDetails.objects.count()
+            if total_entries > 5:
+                excess = total_entries - 5
+                # Delete oldest records first
+                oldest_entries = GasDetails.objects.order_by('timestamp')[:excess]
+                GasDetails.objects.filter(id__in=[entry.id for entry in oldest_entries]).delete()
+                print(f"Deleted {excess} old entries, keeping last 5.")
+
+            # ✅ Create notification only if gas is high
+            if gas_value is not None and gas_value > 4000:
+                print('&&&&&&&&&&&&&&&&&&&&&&&&77')
+                Notification.objects.create(
+                    date=datetime.now(),
+                    message="Gas leakage detected",
+                    deviceid=device_id,
+                    viewed=False
+                )
+            print('88888888888888888888888')
+
+            return Response({
+                "status": "success",
+                "device_id": device_id,
+                "event": event,
+                "gas_value": gas_value,
+                "fan_status": fan_status,
+                "light_status": light_status,
+                "servo_position": servo_position
+            }, status=status.HTTP_201_CREATED)
+
+        except Exception as e:
+            return Response({
+                "status": "error",
+                "message": str(e)
+            }, status=status.HTTP_400_BAD_REQUEST)

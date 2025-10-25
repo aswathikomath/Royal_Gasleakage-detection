@@ -23,10 +23,20 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model= UserTable
         fields = ['id', 'name','phone','place', 'phone', 'consumernumber']
-class GasDetailsSerializer(ModelSerializer):
+
+class GasDetailsSerializer(serializers.ModelSerializer):
     class Meta:
-     model=GasDetails    
-     fields=['id', 'timestamp','device_id','event','gas_value','light_status','fan_status','servo_position']   
+        model = GasDetails
+        fields = ['id', 'timestamp','device_id','event','gas_value','servo_position','fan_status','light_status']
+        # 'device_id', 'event', 'gas_value', 'light_status', 'fan_status', 'servo_position'
+
+    def to_representation(self, instance):
+        data = super().to_representation(instance)
+        for field in ['light_status', 'fan_status']:
+            value = data.get(field)
+            if isinstance(value, str):
+                data[field] = 1 if value.upper() == 'ON' else 0
+        return data
 class NotificationSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField()
     place = serializers.SerializerMethodField()

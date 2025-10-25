@@ -34,13 +34,14 @@ class ComplaintTable(models.Model):
     replay=models.CharField(max_length=100,null=True,blank=True, default="pending")
 
 class GasDetails(models.Model):
-    timestamp=models.DateTimeField(null=True,blank=True)
-    device_id=models.IntegerField(null=True,blank=True)
-    event=models.CharField(max_length=100,null=True,blank=True)
-    gas_value=models.IntegerField(null=True,blank=True)
-    light_status=models.CharField(max_length=100,null=True,blank=True)
-    fan_status=models.CharField(max_length=100,null=True,blank=True)
-    servo_position=models.CharField(max_length=100,null=True,blank=True)
+    timestamp = models.DateTimeField(auto_now_add=True)  # automatically set, no null/blank needed
+    device_id = models.IntegerField()  # required
+    event = models.CharField(max_length=100, blank=True, null=True)  # optional
+    gas_value = models.IntegerField(blank=True, null=True)  # optional
+    light_status = models.CharField(max_length=100,blank=True, null=True, default=0)  # 0/1
+    fan_status = models.CharField(max_length=100,blank=True, null=True, default=0)    # 0/1
+    servo_position = models.CharField(max_length=100, blank=True, null=True)
+
 class notificationbysafety(models.Model):
     message=models.CharField(max_length=100,null=True,blank=True)
     date=models.DateTimeField(auto_now=True,null=True,blank=True)

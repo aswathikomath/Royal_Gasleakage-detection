@@ -49,4 +49,7 @@ urlpatterns = [
     path('SendNotificationtouserAPIView/',SendNotificationtouserAPIView.as_view(),name='SendNotificationtouserAPIView'),
     path('view_notificationsfromsafety/', ViewNotificationsFromSafety.as_view(), name='view_notificationsfromsafety'),
 
+    ##########################Embedded#####################################33
+    path('log_event',LogEventAPIView.as_view(), name='log_event'),
+
 ]
